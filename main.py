@@ -29,7 +29,10 @@ class TaskManager:
             return "Invalid category names."
 
     def list_category(self, category):
-        print(self.categories[category])
+        if category in self.categories:
+            return self.categories[category]
+        else:
+            return "Invalid category name."
 
     def save_tasks(self):
         with open(self.filename, 'wb') as file:
@@ -43,15 +46,15 @@ class TaskManager:
 def main():
     task_manager = TaskManager()
 
-    while True:
-        print("\nTask Manager Options:")
-        print("add <category> <task>")
-        print("pop <category>")
-        print("merge <source_category> <destination_category>")
-        print("list <category>")
-        print("quit")
+    print("\nTask Manager Options:")
+    print("add <category> <task>")
+    print("pop <category>")
+    print("merge <source_category> <destination_category>")
+    print("list <category> (use only when necessary)")
+    print("quit")
 
-        print(f"Categories: {list(task_manager.categories.keys())}")
+    while True:
+        print(f"\nCategories: {list(task_manager.categories.keys())}")
 
         command = input("Enter your command: ").strip().split()
 
@@ -98,7 +101,8 @@ def main():
                 print("Invalid command. Usage: list <category>")
             else:
                 category = command[1]
-                task_manager.list_category(category)
+                result = task_manager.list_category(category)
+                print(result)
 
         elif action == 'quit':
             print("Exiting Task Manager.")
