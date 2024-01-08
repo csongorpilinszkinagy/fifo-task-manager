@@ -28,6 +28,9 @@ class TaskManager:
         else:
             return "Invalid category names."
 
+    def list_category(self, category):
+        print(self.categories[category])
+
     def save_tasks(self):
         with open(self.filename, 'wb') as file:
             pickle.dump(self.categories, file)
@@ -45,6 +48,7 @@ def main():
         print("add <category> <task>")
         print("pop <category>")
         print("merge <source_category> <destination_category>")
+        print("list <category>")
         print("quit")
 
         print(f"Categories: {list(task_manager.categories.keys())}")
@@ -88,6 +92,13 @@ def main():
                     print(result)
                 else:
                     print(f"Categories '{source_category}' and '{destination_category}' merged successfully.")
+
+        elif action == 'list':
+            if len(command) < 2:
+                print("Invalid command. Usage: list <category>")
+            else:
+                category = command[1]
+                task_manager.list_category(category)
 
         elif action == 'quit':
             print("Exiting Task Manager.")
